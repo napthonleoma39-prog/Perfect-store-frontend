@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Perfect Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align:center; padding:40px; background:#f5f6f8; }
+    .card { background:#fff; display:inline-block; padding:24px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.08); max-width:360px; }
+    button { background:#6772e5; color:#fff; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-size:16px; }
+    button:hover { background:#5469d4; }
+  </style>
+</head>
+<body>
+  <h1>Perfect Store</h1>
+
+  <div class="card">
+    <h2>Perfect Store Sample Product</h2>
+    <p><strong>$19.99 USD</strong></p>
+    <button id="buyBtn">Buy Now</button>
+  </div>
+
+  <script>
+    const BACKEND_URL = "https://your-backend-url.onrender.com";
+
+    document.getElementById("buyBtn").addEventListener("click", async () => {
+      const res = await fetch(`${BACKEND_URL}/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else alert("Checkout session failed");
+    });
+  </script>
+</body>
+</html>
